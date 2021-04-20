@@ -1,0 +1,286 @@
+{
+	"info": {
+		"_postman_id": "8bf10512-5c5f-44ed-a49f-fcb8428e4645",
+		"name": "Inv-Pro",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1- Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"bruno\",\n    \"password\": \"myVerySecretPass\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2- Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"bruno\",\n    \"password\": \"myVerySecretPass\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/auth/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Invoice",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MTg5MzUzMTl9.IlAmpD6jWxmHzthAJ77iCxEOK93_NHV1NHUm9DypcGI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"invoice_id\": \"TEST-INVOICE-ID3\",\n    \"amount\": 32099,\n    \"due_date\": \"2021-01-11\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/invoices",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"invoices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Chargeback",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MTg5MjgwMzZ9.Nbmh0b7b9NHiAaXASDhoetUKp1Llm-weji0UcvxZDrQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"invoice_id\": \"TEST-INVOICE-ID2\",\n    \"amount\": 22000,\n    \"reason\": \"unrecognized payment\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/chargebacks",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"chargebacks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Invoice (amount)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MTg5MTk5MTN9.JJgFcgJ4Nx8lO8KuQHxyV3D4GdjnVx6phFFIvq7Bcj8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": \"21099\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/invoices/:invoice_id",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"invoices",
+						":invoice_id"
+					],
+					"variable": [
+						{
+							"key": "invoice_id",
+							"value": "TEST-INVOICE-ID2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pay Invoice",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MTg4ODI0MjF9.R0bSF2_xaGgtSVKfj2IOXWkgCdAX8etQs04lpKVCmWM",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/invoices/:invoice_id/pay",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"invoices",
+						":invoice_id",
+						"pay"
+					],
+					"variable": [
+						{
+							"key": "invoice_id",
+							"value": "TEST-INVOICE-ID2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalidate Invoice",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MTg4NzgwMjd9.smqgMDrY1ch5NU14sUaVYPEMrZSflpMLaRLsyhBFjOE"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/invoices/:invoice_id/invalidate",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"invoices",
+						":invoice_id",
+						"invalidate"
+					],
+					"variable": [
+						{
+							"key": "invoice_id",
+							"value": "TEST-INVOICE-ID2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List All Invoices",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MTg5Mjk5OTh9.9omJYfvNzB7fVP_nBcVPtKj0qIIFWb9fQyFpgtXX70A",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/invoices?status=PENDING",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"invoices"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "PENDING"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Invoice",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MTg4MDM5NzN9.lXG80rxuAAKtzdCCp0f0S4ZH6bYFgdMXaRGMSIDilzE"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/invoices/:invoice_id",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"invoices",
+						":invoice_id"
+					],
+					"variable": [
+						{
+							"key": "invoice_id",
+							"value": "TEST-INVOICE-ID2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

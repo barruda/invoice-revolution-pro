@@ -1,24 +1,64 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+0) Install ruby(rbenv or rvm) and run
+```
+bundle install 
+```
 
-Things you may want to cover:
+1) install mysql (or mariadb) client libs - as needed, maybe optional and change according to your OS
+```
+sudo apt-get install libmariadb-dev
+```
 
-* Ruby version
+2) Run mysql docker container
+```
+docker run -p 3306:3306 --name mysql_80 -e MYSQL_ROOT_PASSWORD=password -d mysql:8 mysqld --default-authentication-plugin=mysql_native_password
+```
 
-* System dependencies
+3) Run create db rails task
+```
+rails db:create
+```
 
-* Configuration
+4) Run migrations
+```
+rails db:migrate
+```
 
-* Database creation
+5) Run application server
+``` 
+ rails s -b 0.0.0.0 -p 3000
+```
 
-* Database initialization
+6) Use postman(docs folder) supplied collection to use the application, remember to first create a user, then login and use the returned
+authentication token on following API calls headers.
 
-* How to run the test suite
+---
+*business assumptions:*
 
-* Services (job queues, cache servers, search engines, etc.)
+- users can update any invoice (should be improved)
+- a user can report only full payments (I assumed that because all the entities had specific details, but not payments) and to make the scope narrower
+---
 
-* Deployment instructions
+*tech decisions and assumptions:*
 
-* ...
+- added a service layer for business rules,  but skipping it on very simple use cases for clarity (but should be respected as the application grows for data manipulation/validation/rules  to preserve controller tier)
+- currency is handled as an integer, considering last 2 digits as decimal (Ex.:  1387 = $13,87)
+- Used JWT for implementing authentication(for security and session expiration)
+- The  user creation is opened (should not be available public as endpoint at least)
+- No controllers spec tests, but instead used requests specs as advised by rspec and rails teams. (which tests routes, controller and e2e features)
+
+
+---
+*Roadmap suggested:*
+
+- Throw in more tests, I've given some coverage, but limited to time frame
+- Make some refactoring on structure (got a little messy on the development)
+- Fix bugs (already found some on review process, but I will not point to you of course :)
+- Add factorybot  / shoulda matchers / simplecov gems
+- Production Environment (database) and add configurations
+- create API errorcodes protocol
+- cors enabling for SPA
+- Improve logging and troubleshooting (adding more meaningful messages, maybe a JSON format for a ELK stack and timeseries monitoring like Prometheus)
+- setup CI/CD (with rubocop/ tests and image generation)
+- API documentation (maybe openapi)
