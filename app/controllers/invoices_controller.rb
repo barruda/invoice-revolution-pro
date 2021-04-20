@@ -5,7 +5,11 @@ class InvoicesController < ApplicationController
   before_action :find_invoice, except: %i[create index]
 
   def index
-    invoices = Invoice.all
+    invoices = if params[:status]
+                 Invoice.where(status: params[:status])
+               else
+                 Invoice.all
+               end
     if !invoices.empty?
       render json: invoices, status: :ok
     else
