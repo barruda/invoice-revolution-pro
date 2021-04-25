@@ -4,11 +4,13 @@ require 'rails_helper'
 
 RSpec.describe Invoice, type: :model do
   let(:invoice_id) { 'ID Invoice - Anything' }
+  let(:scanned_invoice) { fixture_file_upload('invoice-example.png') }
 
   subject do
     described_class.new(invoice_id: invoice_id,
                         due_date: DateTime.now,
-                        amount: 450_600)
+                        amount: 450_600,
+                        scanned: scanned_invoice)
   end
 
   context 'when there is no Invoice registered for the id' do
@@ -35,7 +37,7 @@ RSpec.describe Invoice, type: :model do
   context 'when there is already an Invoice registered for the id' do
     before(:each) do
       described_class.create!(invoice_id: invoice_id, due_date: DateTime.now,
-                              amount: 110_600)
+                              amount: 110_600, scanned: scanned_invoice)
     end
 
     it 'is not valid because invoice_id should be unique' do
