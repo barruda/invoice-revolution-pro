@@ -3,7 +3,7 @@
 class Invoice < ApplicationRecord
   before_save :default_values
 
-  validates :invoice_id, presence: true, uniqueness: true
+  validates :invoice_id, presence: true, uniqueness: { case_sensitive: true }
   validates :due_date, presence: true
   validates :amount, presence: true
 
