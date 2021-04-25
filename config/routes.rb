@@ -10,5 +10,6 @@ Rails.application.routes.draw do
   put '/invoices/:invoice_id/invalidate', to: 'transactions#invalidate'
 
   post '/auth/login', to: 'authentication#login'
-  get '/*a', to: 'application#not_found'
+  get '/*a', to: 'application#not_found',
+             constraints: ->(request) { !request.path_parameters[:a].start_with?('rails/') }
 end

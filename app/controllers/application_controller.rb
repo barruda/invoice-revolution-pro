@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
+  def not_found
+    render json: { error: 'not_found' }
+  end
+
   protected
 
   def authorize
@@ -12,9 +16,5 @@ class ApplicationController < ActionController::API
     render json: { errors: e.message }, status: :unauthorized
   rescue JWT::DecodeError => e
     render json: { errors: e.message }, status: :unauthorized
-  end
-
-  def not_found
-    render json: { error: 'not_found' }
   end
 end
