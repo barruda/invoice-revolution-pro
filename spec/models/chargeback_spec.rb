@@ -15,12 +15,12 @@ RSpec.describe Chargeback, type: :model do
       expect(subject).to be_valid
     end
 
-    it 'is not valid without an username' do
+    it 'is not valid without an reason' do
       subject.reason = nil
       expect(subject).to_not be_valid
     end
 
-    it 'is not valid without a password' do
+    it 'is not valid without an amount' do
       subject.amount = nil
       expect(subject).to_not be_valid
     end

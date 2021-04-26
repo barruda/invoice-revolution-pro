@@ -28,21 +28,16 @@ describe InvoiceChargeback do
     end
 
     context 'and the added chargeback does NOT equal the invoice total amount' do
-      before do
-        subject
-      end
-
-      it { expect(subject.status).to_not eq('CHARGEBACKED') }
+      it { expect { subject }.to raise_error(Business::InsufficientBalanceException) }
     end
 
     context 'and the added chargeback SURPASS the invoice total amount' do
       context 'and the added chargeback does NOT equal the invoice total amount' do
         before do
           allow(registered_invoice).to receive(:chargebacks).and_return(chargebacks)
-          subject
         end
 
-        it { expect(subject.status).to eq('CHARGEBACKED') }
+        it { expect { subject }.to raise_error(Business::InsufficientBalanceException) }
       end
     end
   end

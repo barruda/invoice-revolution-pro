@@ -9,4 +9,10 @@ module Business
 
   class NotFoundException < BusinessException
   end
+
+  class AmountExceedsException < BusinessException
+  end
+
+  class InsufficientBalanceException < BusinessException
+  end
 end

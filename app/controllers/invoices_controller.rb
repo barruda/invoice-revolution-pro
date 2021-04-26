@@ -13,14 +13,15 @@ class InvoicesController < ApplicationController
                  Invoice.all
                end
     if !invoices.empty?
-      render json: invoices, status: :ok
+      render json: invoices.to_json(include: %i[chargebacks payments]), status: :ok
     else
       render json: { errors: 'No invoices found' }, status: :not_found
     end
   end
 
   def show
-    render json: @invoice, status: :ok
+    @invoice.chargebacks.load
+    render json: @invoice.to_json(include: %i[chargebacks payments]), status: :ok
   end
 
   def create
@@ -36,7 +37,7 @@ class InvoicesController < ApplicationController
   def update
     @invoice = InvoiceUpdate.new.process(invoice_params)
     render json: @invoice, status: :ok
-  rescue StandardError
+  rescue Business::NotFoundException, StandardError
     render json: { errors: 'Could not update Invoice' },
            status: :unprocessable_entity
   end
