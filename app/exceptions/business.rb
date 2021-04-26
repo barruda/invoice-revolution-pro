@@ -6,4 +6,7 @@ module Business
 
   class InvalidTransactionException < BusinessException
   end
+
+  class NotFoundException < BusinessException
+  end
 end

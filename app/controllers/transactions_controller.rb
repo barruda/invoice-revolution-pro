@@ -16,8 +16,8 @@ class TransactionsController < ApplicationController
   def update_invoice(new_status = InvoiceStatus::PAID)
     invoice = InvoiceChangeStatus.new.process params, new_status
     render json: invoice, status: :ok
-  rescue StandardError
-    render json: { errors: 'Could not update Invoice' },
+  rescue Business::NotFoundException
+    render json: { errors: 'Could not update - Invoice not found' },
            status: :unprocessable_entity
   end
 end
