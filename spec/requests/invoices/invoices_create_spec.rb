@@ -17,7 +17,8 @@ RSpec.describe 'Invoices', type: :request do
       {
         invoice_id: invoice_id,
         due_date: due_date,
-        amount: amount
+        amount: amount,
+        scanned: fixture_file_upload('invoice-example.png')
       }
     end
 

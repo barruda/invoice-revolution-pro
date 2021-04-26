@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class InvoicesController < ApplicationController
-  before_action :authorize, except: %i[index download]
+  include Rails.application.routes.url_helpers
+
+  before_action :authorize, except: %i[index scanned]
   before_action :find_invoice, except: %i[create index]
 
   def index
@@ -39,12 +41,12 @@ class InvoicesController < ApplicationController
            status: :unprocessable_entity
   end
 
-  def download_invoice
-    # TODO: implement me
-  end
-
-  def upload_invoice
-    # TODO: implement me
+  def scanned
+    if @invoice&.scanned&.attached? && @invoice&.scanned&.persisted?
+      redirect_to rails_blob_path(@invoice.scanned, disposition: 'attachment')
+    else
+      head :not_found
+    end
   end
 
   private
@@ -56,6 +58,6 @@ class InvoicesController < ApplicationController
   end
 
   def invoice_params
-    params.permit(:invoice_id, :due_date, :amount)
+    params.permit(:invoice_id, :due_date, :amount, :scanned)
   end
 end
