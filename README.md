@@ -2,6 +2,9 @@
 
 Welcome to Invoice Revolution Pro. You have two options to start the development environment, with docker-compose or just using a mysql docker container.
 
+Use postman(docs folder) supplied collection and environment to use the application, remember to first create a user, then login and use the returned
+   authentication token on following API calls headers.
+
 With docker-compose installed, run the following command and wait for the migrations to be run and the puma server to be started
 ```
 docker-compose up
@@ -39,9 +42,6 @@ rails db:migrate
 ``` 
  rails s -b 0.0.0.0 -p 3000
 ```
-
-6) Use postman(docs folder) supplied collection to use the application, remember to first create a user, then login and use the returned
-authentication token on following API calls headers.
 
 ---
 *business assumptions:*
