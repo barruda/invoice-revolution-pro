@@ -9,7 +9,8 @@ describe InvoiceChargeback do
   end
 
   let(:invoice_data) do
-    { invoice_id: invoice_id, due_date: DateTime.now, amount: 180_00 }
+    { invoice_id: invoice_id, due_date: DateTime.now, amount: 180_00,
+      scanned: fixture_file_upload('invoice-example.png') }
   end
 
   let(:chargebacks) do
