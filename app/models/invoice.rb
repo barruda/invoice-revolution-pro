@@ -11,6 +11,7 @@ class Invoice < ApplicationRecord
                       size: { less_than: 5.megabytes, message: 'file must be less than 5MB in size' }
 
   has_many :chargebacks
+  has_many :payments
   has_one_attached :scanned
 
   def default_values

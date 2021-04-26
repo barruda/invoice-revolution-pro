@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_24_204353) do
+ActiveRecord::Schema.define(version: 2021_04_26_101813) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 2021_04_24_204353) do
     t.index ["invoice_id"], name: "index_invoices_on_invoice_id", unique: true
   end
 
+  create_table "payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "invoice_id"
+    t.integer "amount"
+    t.datetime "payment_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["invoice_id"], name: "index_payments_on_invoice_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
@@ -61,4 +70,5 @@ ActiveRecord::Schema.define(version: 2021_04_24_204353) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "chargebacks", "invoices"
+  add_foreign_key "payments", "invoices"
 end
