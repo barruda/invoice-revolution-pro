@@ -1,5 +1,15 @@
 # README
 
+Welcome to Invoice Revolution Pro. You have two options to start the development environment, with docker-compose or just using a mysql docker container.
+
+With docker-compose installed, run the following command and wait for the migrations to be run and the puma server to be started
+```
+docker-compose up
+```
+
+Without docker-compose
+---
+
 0) Install ruby(rbenv or rvm) and run
 ```
 bundle install 

@@ -11,12 +11,12 @@
 #
 default: &default
   adapter: mysql2
+  host: <%= ENV['MYSQL_HOST'] || '127.0.0.1' %>
+  username: <%= ENV['MYSQL_USER'] || 'root' %>
+  password: <%= ENV['MYSQL_PASSWORD'] || 'password' %>
   encoding: utf8mb4
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password: password
-  socket: /var/run/mysqld/mysqld.sock
-  host: 127.0.0.1
+  collation: utf8mb4_unicode_ci
+  pool: <%= ENV["RAILS_MAX_THREADS"] ||  5  %>
 
 development:
   <<: *default

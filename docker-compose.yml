@@ -1,0 +1,53 @@
+version: "3.5"
+
+volumes:
+  bundle:
+    driver: local
+  mysql:
+    driver: local
+  tmp:
+    driver: local
+  node-modules:
+    driver: local
+
+services:
+  app:
+    build:
+      args:
+        BUNDLE_WITHOUT: "darwin"
+        RAILS_ENV: development
+      target: base
+      context: .
+    image: "invoice-revolution-pro:1.0"
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/home/app
+      - bundle:/bundle
+      - tmp:/home/app/tmp
+    environment:
+      - RAILS_ENV=development
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=password
+      - BUNDLE_PATH=/bundle
+      - BUNDLE_JOBS=2
+      - BUNDLE_RETRY=3
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    links:
+      - mysql
+
+  mysql:
+    image: mysql:8.0.21
+    command:
+      - --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=invoice_revolution_pro
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql:/var/lib/mysql
